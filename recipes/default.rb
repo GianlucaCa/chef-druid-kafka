@@ -21,7 +21,7 @@ mysql_service 'druid' do
 #  )
   port '3306'
   version '5.5'
-  initial_root_password ''
+  initial_root_password 'diurd'
   action [ :create, :start ]
 end
 
@@ -30,6 +30,7 @@ node.set[:druid][:properties]['druid.zk.service.host'] = 'localhost'
 node.set[:druid][:properties]['druid.db.connector.connectURI'] = 'jdbc:mysql://localhost/druid'
 node.set[:druid][:properties]['druid.db.connector.user'] = 'root'
 node.set[:druid][:properties]['druid.db.connector.password'] = node['mysql']['server_root_password']
+
 node.set[:druid][:properties]['druid.computation.buffer.size'] = 10 * 1024 * 1024
 
 # From Historical node quickstart http://druid.io/docs/latest/Historical-Config.html

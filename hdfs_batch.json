@@ -1,0 +1,103 @@
+{
+  "type" : "index_hadoop",
+  "spec" : {
+    "dataSchema" : {
+      "dataSource" : "fastly",
+      "parser" : {
+        "type" : "string",
+        "parseSpec" : {
+          "format" : "tsv",
+          "delimiter" : "|",
+          "columns" : [
+              "start",
+              "timestamp",
+              "ipaddress",
+              "cookie",
+              "url",
+              "requesttype",
+              "statuscode",
+              "latitude",
+              "longitude",
+              "city",
+              "continent_code",
+              "country_code",
+              "country_code3",
+              "country_name",
+              "postal_code",
+              "region",
+              "area_code",
+              "metro_code",
+              "fingerprint",
+              "clientid",
+              "campaignid"
+            ],
+          "timestampSpec" : {
+            "column" : "timestamp",
+            "format" : "EEE, dd MMM yyyy HH:mm:ss z"
+          },
+          "dimensionsSpec" : {
+            "dimensions" : [
+              "start",
+              "timestamp",
+              "ipaddress",
+              "cookie",
+              "url",
+              "requesttype",
+              "statuscode",
+              "latitude",
+              "longitude",
+              "city",
+              "continent_code",
+              "country_code",
+              "country_code3",
+              "country_name",
+              "postal_code",
+              "region",
+              "area_code",
+              "metro_code",
+              "fingerprint",
+              "clientid",
+              "campaignid"
+            ],
+            "dimensionExclusions" : [],
+            "spatialDimensions" : [ { "dimName": "coordinates", "dims": ["latitude", "longitude"] } ]
+          }
+        }
+      },
+      "metricsSpec": [
+        {
+          "type": "count",
+          "name": "count"
+        },
+        {
+          "type": "doubleSum",
+          "name": "added",
+          "fieldName": "added"
+        },
+        {
+          "type": "doubleSum",
+          "name": "deleted",
+          "fieldName": "deleted"
+        },
+        {
+          "type": "doubleSum",
+          "name": "delta",
+          "fieldName": "delta"
+        }
+      ]
+    },
+    "ioConfig" : {
+      "type" : "hadoop",
+      "inputSpec" : {
+        "type" : "static",
+        "paths" : "hdfs://localhost:8020/user/rustyp/logs"
+      }
+    },
+    "tuningConfig" : {
+      "type" : "hadoop",
+      "partitionsSpec": {
+        "targetPartitionSize": 5000000
+      }
+    }
+  }
+}
